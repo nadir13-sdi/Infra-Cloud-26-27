@@ -9,11 +9,11 @@ ansible_network_os=cisco.ios.ios
 ansible_connection=ansible.netcommon.network_cli
 ansible_network_cli_ssh_type=libssh
 ansible_user=cisco
-ansible_password=CHANGE_ME
+ansible_password=xxx
 
 [CSR1kv:vars]
 ansible_network_os=cisco.ios.ios
 ansible_connection=ansible.netcommon.network_cli
 ansible_network_cli_ssh_type=libssh
 ansible_user=cisco
-ansible_password=CHANGE_ME
+ansible_password=xx
