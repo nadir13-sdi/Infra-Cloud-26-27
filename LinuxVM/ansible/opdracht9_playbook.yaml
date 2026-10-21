@@ -1,0 +1,26 @@
+---
+- name: Configure loopback interface
+  hosts: CSR1kv
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Add loopback interface using ios_config
+      cisco.ios.ios_config:
+        lines:
+          - interface Loopback110
+          - ip address 10.110.0.2 255.255.255.0
+      register: config_result
+
+    - name: Display result of configuration change
+      debug:
+        var: config_result
+
+    - name: Verify loopback interfaces
+      cisco.ios.ios_command:
+        commands:
+          - show ip interface brief | include Loopback
+      register: result
+
+    - name: Display verification result
+      debug:
+        var: result.stdout_lines

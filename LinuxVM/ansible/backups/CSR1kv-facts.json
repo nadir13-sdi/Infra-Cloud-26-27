@@ -1,0 +1,92 @@
+{
+    "ansible_facts": {
+        "ansible_net_all_ipv4_addresses": [
+            "192.168.30.10",
+            "10.10.11.11"
+        ],
+        "ansible_net_all_ipv6_addresses": [
+            "2001:DB8:ACAD:1::101"
+        ],
+        "ansible_net_api": "cliconf",
+        "ansible_net_cpu_utilization": {
+            "core": {
+                "five_minutes": 0,
+                "five_seconds": 7,
+                "five_seconds_interrupt": 0,
+                "one_minute": 1
+            }
+        },
+        "ansible_net_filesystems": [
+            "bootflash:"
+        ],
+        "ansible_net_filesystems_info": {
+            "bootflash:": {
+                "spacefree_kb": 6516964.0,
+                "spacetotal_kb": 7712692.0
+            }
+        },
+        "ansible_net_gather_network_resources": [],
+        "ansible_net_gather_subset": [
+            "hardware",
+            "interfaces",
+            "default"
+        ],
+        "ansible_net_hostname": "CSR1kv",
+        "ansible_net_image": "bootflash:packages.conf",
+        "ansible_net_interfaces": {
+            "GigabitEthernet1": {
+                "bandwidth": 1000000,
+                "description": "IPv6 ADDRESS FROM ANSIBLE",
+                "duplex": "Full",
+                "ipv4": [
+                    {
+                        "address": "192.168.30.10",
+                        "subnet": "24"
+                    }
+                ],
+                "ipv6": [
+                    {
+                        "address": "2001:DB8:ACAD:1::101",
+                        "subnet": "2001:DB8:ACAD:1::/64"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "000c.29db.5848",
+                "mediatype": "Virtual",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "CSR vNIC"
+            },
+            "Loopback1111": {
+                "bandwidth": 8000000,
+                "description": "Loopback interface 1111 created with Ansible",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.10.11.11",
+                        "subnet": "32"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": null,
+                "mediatype": null,
+                "mtu": 1514,
+                "operstatus": "up",
+                "type": null
+            }
+        },
+        "ansible_net_iostype": "IOS-XE",
+        "ansible_net_memfree_mb": 1820.89741897583,
+        "ansible_net_memtotal_mb": 2130.972785949707,
+        "ansible_net_model": "CSR1000V",
+        "ansible_net_neighbors": {},
+        "ansible_net_operatingmode": "controller",
+        "ansible_net_python_version": "3.14.4",
+        "ansible_net_serialnum": "95L21YY33XQ",
+        "ansible_net_system": "ios",
+        "ansible_net_version": "16.09.05",
+        "ansible_network_resources": {}
+    },
+    "changed": false,
+    "failed": false
+}
