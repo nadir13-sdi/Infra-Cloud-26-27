@@ -1,6 +1,6 @@
 ---
 - name: Configure loopback interface
-  hosts: CSR1kv
+  hosts: routers
   gather_facts: no
   connection: network_cli
   tasks:

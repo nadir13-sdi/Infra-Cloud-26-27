@@ -4,14 +4,14 @@ Mijn scripts voor Infrastructuur & Cloud (CCNA Automation & DevNet), 2026-2027.
 
 ## Waar vind je mijn scripts?
 
-| Week | Onderwerp | Map |
-|------|-----------|-----|
-| 1 | myip.py en eerste Netmiko test | [Week-1](Week-1) |
-| 2 | Datetime, Netmiko test, Geopy, Dict & JSON, My IP, System Info | [Python_Experiments](Python_Experiments) |
-| 3 | Systeeminfo filteren, JSON, CSV, Excel, samenvoegen, valideren, serienummer | [Data_Processing](Data_Processing) |
-| 4-5 | Netmiko opdracht 1-5 (output in tekst en JSON) | [LinuxVM/netmiko](LinuxVM/netmiko) |
-| 4-5 | Ansible opdracht 6-9 (ios_facts, ios_command, compliance, ios_config) | [LinuxVM/ansible](LinuxVM/ansible) |
-| 6 | API calls: School Library en Webex | [Week-6](Week-6) |
+| Week | Map | Inhoud |
+|------|-----|--------|
+| 1 | [1_Lab_Setup](1_Lab_Setup) | myip.py en eerste Netmiko test |
+| 2 | [2_Python_Experiments](2_Python_Experiments) | Datetime, Netmiko test, Geopy, Dict & JSON, My IP, System Info |
+| 3 | [3_Data_Processing](3_Data_Processing) | Systeeminfo filteren, JSON, CSV, Excel, samenvoegen, valideren, serienummer |
+| 4 | [4_Network_Automation](4_Network_Automation) | Netmiko opdracht 1-5 en Ansible opdracht 6-9 op de CSR1000v |
+| 5 | [5_CML_Automation](5_CML_Automation) | Dezelfde Netmiko en Ansible opdrachten op CML (router-1) |
+| 6 | [6_API_Calls](6_API_Calls) | API calls: School Library en Webex |
 
 ## Omgevingen
 
