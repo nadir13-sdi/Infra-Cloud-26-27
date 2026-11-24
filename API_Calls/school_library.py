@@ -1,21 +1,47 @@
 import json
+
 import requests
+from faker import Faker
 
-BASIS = "http://library.demo.local/api/v1"
+APIHOST = "http://library.demo.local"
+LOGIN = "cisco"
+PASSWORD = "Cisco123!"
 
-r = requests.post(f"{BASIS}/loginViaBasic", auth=("cisco", "Cisco123!"))
-print("Login status:", r.status_code)
-token = r.json()["token"]
-headers = {"X-API-KEY": token, "Content-Type": "application/json"}
 
-r = requests.get(f"{BASIS}/books", headers=headers)
-print("GET status:", r.status_code)
-boeken = r.json()
-print("Aantal boeken:", len(boeken))
-for boek in boeken[:5]:
+def getAuthToken():
+    r = requests.post(f"{APIHOST}/api/v1/loginViaBasic", auth=(LOGIN, PASSWORD))
+    if r.status_code == 200:
+        return r.json()["token"]
+    raise Exception(f"Status code {r.status_code} en tekst {r.text} bij het inloggen.")
+
+
+def getBooks():
+    r = requests.get(f"{APIHOST}/api/v1/books")
+    print("GET /books status:", r.status_code)
+    return r.json()
+
+
+def addBook(book, apiKey):
+    r = requests.post(
+        f"{APIHOST}/api/v1/books",
+        headers={"Content-type": "application/json", "X-API-Key": apiKey},
+        data=json.dumps(book),
+    )
+    if r.status_code == 200:
+        print(f"Boek {book['id']} toegevoegd: {book['title']}")
+    else:
+        raise Exception(f"Error code {r.status_code} en tekst {r.text} bij boek {book}.")
+
+
+apiKey = getAuthToken()
+print("Token ontvangen:", apiKey)
+
+fake = Faker()
+for i in range(90, 100):
+    book = {"id": i, "title": fake.catch_phrase(), "author": fake.name(), "isbn": fake.isbn13()}
+    addBook(book, apiKey)
+
+boeken = getBooks()
+print("Aantal boeken nu:", len(boeken))
+for boek in boeken[-10:]:
     print(boek["id"], "-", boek["title"], "-", boek["author"])
-
-nieuw = {"id": 101, "title": "Netwerkautomatisatie", "author": "Student", "isbn": "123-4-56-789012-3"}
-r = requests.post(f"{BASIS}/books", headers=headers, json=nieuw)
-print("POST status:", r.status_code)
-print(json.dumps(r.json(), indent=2))

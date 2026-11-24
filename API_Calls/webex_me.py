@@ -1,11 +1,12 @@
 import json
+
 import requests
 
-token = "PLAK_HIER_JE_TOKEN"
-headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+access_token = "PLAK_HIER_JE_TOKEN"
+headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"}
 
 res = requests.get("https://webexapis.com/v1/people/me", headers=headers, timeout=10)
-print("Return code:", res.status_code)
+print("API Return Code:", res.status_code)
 if res.ok:
     data = res.json()
     print("Naam:", data.get("displayName"))
