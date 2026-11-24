@@ -1,0 +1,25 @@
+---
+- name: Remove loopback interface
+  hosts: routers
+  gather_facts: no
+  tasks:
+    - name: Remove Loopback110
+      cisco.ios.ios_config:
+        lines:
+          - no interface Loopback110
+      register: config_result
+      ignore_errors: yes
+
+    - name: Display result of configuration change
+      ansible.builtin.debug:
+        var: config_result.updates
+
+    - name: Verify loopback interfaces
+      cisco.ios.ios_command:
+        commands:
+          - show ip interface brief | include Loopback
+      register: result
+
+    - name: Display result
+      ansible.builtin.debug:
+        var: result.stdout_lines
