@@ -3,9 +3,7 @@ import socket
 import psutil
 from pprint import pprint
 
-
 def get_primary_interface_info():
-    """Détecte la carte réseau active menant vers l'extérieur."""
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
@@ -13,7 +11,6 @@ def get_primary_interface_info():
         s.close()
     except Exception:
         active_ip = "127.0.0.1"
-
 
     primary_nic = None
     addrs = psutil.net_if_addrs()
@@ -25,12 +22,10 @@ def get_primary_interface_info():
         if primary_nic:
             break
 
-
     mac = None
     ipv4 = None
     ipv6_global = None
     ipv6_link_local = None
-
 
     if primary_nic and primary_nic in addrs:
         for addr in addrs[primary_nic]:
@@ -45,34 +40,25 @@ def get_primary_interface_info():
                 else:
                     ipv6_global = clean_ip
 
-
     return mac, ipv4, ipv6_global, ipv6_link_local
 
-
 def filter_system_info():
-    # 1. Opslag: partition C:\ sous Windows ou / sous Linux
     root_mount = "C:\\" if platform.system() == "Windows" else "/"
     disk_fs = "Onbekend"
     for part in psutil.disk_partitions(all=False):
         if part.mountpoint == root_mount:
             disk_fs = part.fstype
             break
-   
+
     disk_usage = psutil.disk_usage(root_mount)
     disk_total_gb = round(disk_usage.total / (1024**3), 2)
 
-
-    # 2. Netwerk
     mac, ipv4, ipv6_global, ipv6_ll = get_primary_interface_info()
 
-
-    # 3. CPU & RAM
     freq = psutil.cpu_freq()
     max_freq_mhz = round(freq.max, 2) if freq else None
     ram_gb = round(psutil.virtual_memory().total / (1024**3), 2)
 
-
-    # 4. Le dictionnaire final demandé
     systeeminformatie = {
         "computernaam": platform.node(),
         "computermodel": platform.machine(),
@@ -88,11 +74,8 @@ def filter_system_info():
         "ipv6_link_local_adres_primaire_nic": ipv6_ll,
     }
 
-
     return systeeminformatie
 
-
-# Appel et affichage (ce qui manquait pour voir le résultat dans le terminal)
 if __name__ == "__main__":
     resultaat = filter_system_info()
     print("\n--- GEFILTERDE SYSTEEMINFORMATIE ---")
@@ -102,9 +85,7 @@ import socket
 import psutil
 from pprint import pprint
 
-
 def get_primary_interface_info():
-    """Détecte la carte réseau active menant vers l'extérieur."""
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
@@ -112,7 +93,6 @@ def get_primary_interface_info():
         s.close()
     except Exception:
         active_ip = "127.0.0.1"
-
 
     primary_nic = None
     addrs = psutil.net_if_addrs()
@@ -124,12 +104,10 @@ def get_primary_interface_info():
         if primary_nic:
             break
 
-
     mac = None
     ipv4 = None
     ipv6_global = None
     ipv6_link_local = None
-
 
     if primary_nic and primary_nic in addrs:
         for addr in addrs[primary_nic]:
@@ -144,34 +122,25 @@ def get_primary_interface_info():
                 else:
                     ipv6_global = clean_ip
 
-
     return mac, ipv4, ipv6_global, ipv6_link_local
 
-
 def filter_system_info():
-    # 1. Opslag: partition C:\ sous Windows ou / sous Linux
     root_mount = "C:\\" if platform.system() == "Windows" else "/"
     disk_fs = "Onbekend"
     for part in psutil.disk_partitions(all=False):
         if part.mountpoint == root_mount:
             disk_fs = part.fstype
             break
-   
+
     disk_usage = psutil.disk_usage(root_mount)
     disk_total_gb = round(disk_usage.total / (1024**3), 2)
 
-
-    # 2. Netwerk
     mac, ipv4, ipv6_global, ipv6_ll = get_primary_interface_info()
 
-
-    # 3. CPU & RAM
     freq = psutil.cpu_freq()
     max_freq_mhz = round(freq.max, 2) if freq else None
     ram_gb = round(psutil.virtual_memory().total / (1024**3), 2)
 
-
-    # 4. Le dictionnaire final demandé
     systeeminformatie = {
         "computernaam": platform.node(),
         "computermodel": platform.machine(),
@@ -187,11 +156,8 @@ def filter_system_info():
         "ipv6_link_local_adres_primaire_nic": ipv6_ll,
     }
 
-
     return systeeminformatie
 
-
-# Appel et affichage (ce qui manquait pour voir le résultat dans le terminal)
 if __name__ == "__main__":
     resultaat = filter_system_info()
     print("\n--- GEFILTERDE SYSTEEMINFORMATIE ---")

@@ -1,7 +1,6 @@
 import json
 from netmiko import ConnectHandler
 
-# Opdracht 2 : variabelen
 v_device_type = "cisco_xe"
 v_host = "192.168.30.10"
 v_ssh_port = 22
@@ -21,11 +20,9 @@ device = {
 connection = ConnectHandler(**device)
 connection.enable()
 
-# Opdracht 1 : show ssh
 print("=== show ssh ===")
 print(connection.send_command("show ssh"))
 
-# Opdracht 3 : info verzamelen (TextFSM)
 v = connection.send_command("show version", use_textfsm=True)[0]
 info = {
     "hostname": v["hostname"],
@@ -49,7 +46,6 @@ print(cdp)
 print("\nRouting Table\n-------------")
 print(routes)
 
-# Opdracht 4 : JSON opslaan
 with open("router_inventory.json", "w") as f:
     json.dump(info, f, indent=4)
 

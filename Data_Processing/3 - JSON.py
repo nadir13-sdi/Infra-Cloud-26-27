@@ -4,11 +4,7 @@ from pprint import pprint
 import socket
 import psutil
 
-
-
-
 def get_primary_interface_info():
-  """Identificeert de actieve netwerkinterface naar buiten."""
   try:
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(('8.8.8.8', 80))
@@ -16,7 +12,6 @@ def get_primary_interface_info():
     s.close()
   except Exception:
     active_ip = '127.0.0.1'
-
 
   primary_nic = None
   addrs = psutil.net_if_addrs()
@@ -28,12 +23,10 @@ def get_primary_interface_info():
     if primary_nic:
       break
 
-
   mac = None
   ipv4 = None
   ipv6_global = None
   ipv6_link_local = None
-
 
   if primary_nic and primary_nic in addrs:
     for addr in addrs[primary_nic]:
@@ -48,14 +41,9 @@ def get_primary_interface_info():
         else:
           ipv6_global = clean_ip
 
-
   return mac, ipv4, ipv6_global, ipv6_link_local
 
-
-
-
 def filter_system_info():
-  # Opslag (C:\ op Windows, / op Linux)
   root_mount = 'C:\\' if platform.system() == 'Windows' else '/'
   disk_fs = 'Onbekend'
   for part in psutil.disk_partitions(all=False):
@@ -63,20 +51,14 @@ def filter_system_info():
       disk_fs = part.fstype
       break
 
-
   disk_usage = psutil.disk_usage(root_mount)
   disk_total_gb = round(disk_usage.total / (1024**3), 2)
 
-
-  # Netwerk
   mac, ipv4, ipv6_global, ipv6_ll = get_primary_interface_info()
 
-
-  # CPU & RAM
   freq = psutil.cpu_freq()
   max_freq_mhz = round(freq.max, 2) if freq else None
   ram_gb = round(psutil.virtual_memory().total / (1024**3), 2)
-
 
   return {
       'computernaam': platform.node(),
@@ -93,30 +75,20 @@ def filter_system_info():
       'ipv6_link_local_adres_primaire_nic': ipv6_ll,
   }
 
-
-
-
 if __name__ == '__main__':
-  # 1. Informatie filteren en toekennen aan de variabele 'resultaat'
   resultaat = filter_system_info()
   print('--- GEFILTERDE SYSTEEMINFORMATIE ---')
   pprint(resultaat)
 
-
-  # 2. Omzetten naar JSON en opslaan in een .json-bestand
   bestandsnaam = 'systeeminformatie.json'
   with open(bestandsnaam, 'w', encoding='utf-8') as json_bestand:
     json.dump(resultaat, json_bestand, indent=4)
   print(f'\nGegevens succesvol weggeschreven naar {bestandsnaam}')
 
-
-  # 3. Bestand opnieuw inlezen als Python dictionary
   with open(bestandsnaam, 'r', encoding='utf-8') as json_bestand:
     ingelezen_data = json.load(json_bestand)
   print('Gegevens succesvol opnieuw ingelezen.')
 
-
-  # 4. Controle
   belangrijke_velden = [
       'computernaam',
       'processor',
@@ -126,7 +98,6 @@ if __name__ == '__main__':
       'mac_adres_primaire_nic',
   ]
 
-
   is_correct = True
   for veld in belangrijke_velden:
     origineel = resultaat.get(veld)
@@ -134,7 +105,6 @@ if __name__ == '__main__':
     if origineel != ingelezen:
       print(f'Verschil gevonden bij {veld}: {origineel} != {ingelezen}')
       is_correct = False
-
 
   if is_correct:
     print('Verificatie geslaagd: alle gecontroleerde velden zijn 100% identiek!')

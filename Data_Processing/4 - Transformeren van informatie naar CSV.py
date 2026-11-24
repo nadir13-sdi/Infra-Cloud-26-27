@@ -5,11 +5,7 @@ from pprint import pprint
 import socket
 import psutil
 
-
-
-
 def get_primary_interface_info():
-  """Identificeert de actieve netwerkinterface naar buiten."""
   try:
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(('8.8.8.8', 80))
@@ -17,7 +13,6 @@ def get_primary_interface_info():
     s.close()
   except Exception:
     active_ip = '127.0.0.1'
-
 
   primary_nic = None
   addrs = psutil.net_if_addrs()
@@ -29,12 +24,10 @@ def get_primary_interface_info():
     if primary_nic:
       break
 
-
   mac = None
   ipv4 = None
   ipv6_global = None
   ipv6_link_local = None
-
 
   if primary_nic and primary_nic in addrs:
     for addr in addrs[primary_nic]:
@@ -49,11 +42,7 @@ def get_primary_interface_info():
         else:
           ipv6_global = clean_ip
 
-
   return mac, ipv4, ipv6_global, ipv6_link_local
-
-
-
 
 def filter_system_info():
   root_mount = 'C:\\' if platform.system() == 'Windows' else '/'
@@ -63,14 +52,12 @@ def filter_system_info():
       disk_fs = part.fstype
       break
 
-
   disk_usage = psutil.disk_usage(root_mount)
   disk_total_gb = round(disk_usage.total / (1024**3), 2)
   mac, ipv4, ipv6_global, ipv6_ll = get_primary_interface_info()
   freq = psutil.cpu_freq()
   max_freq_mhz = round(freq.max, 2) if freq else None
   ram_gb = round(psutil.virtual_memory().total / (1024**3), 2)
-
 
   return {
       'computernaam': platform.node(),
@@ -87,15 +74,9 @@ def filter_system_info():
       'ipv6_link_local_adres_primaire_nic': ipv6_ll,
   }
 
-
-
-
 if __name__ == '__main__':
-  # STAP 1: Resultaat ophalen (voorkomt de NameError)
   resultaat = filter_system_info()
 
-
-  # STAP 2: CSV wegschrijven
   csv_bestandsnaam = 'systeeminformatie.csv'
   kolomnamen = [
       'computernaam',
@@ -112,12 +93,10 @@ if __name__ == '__main__':
       'ipv6_link_local_adres_primaire_nic',
   ]
 
-
   rij_data = {}
   for veld in kolomnamen:
     waarde = resultaat.get(veld)
     rij_data[veld] = 'N/A' if waarde is None else waarde
-
 
   with open(
       csv_bestandsnaam, mode='w', newline='', encoding='utf-8-sig'
@@ -126,17 +105,13 @@ if __name__ == '__main__':
     writer.writeheader()
     writer.writerow(rij_data)
 
-
   print(f'Gegevens succesvol weggeschreven naar {csv_bestandsnaam}')
 
-
-  # STAP 3: CSV opnieuw inlezen ter controle
   ingelezen_csv_data = []
   with open(csv_bestandsnaam, mode='r', encoding='utf-8-sig') as csv_bestand:
     reader = csv.DictReader(csv_bestand, delimiter=',')
     for row in reader:
       ingelezen_csv_data.append(dict(row))
-
 
   print('\n--- INGELEZEN DATA UIT CSV ---')
   print(ingelezen_csv_data)

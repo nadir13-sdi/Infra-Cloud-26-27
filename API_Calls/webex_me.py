@@ -1,5 +1,3 @@
-# webex_me.py - Week 6, Managing API Calls: Webex
-# Token (12 uur geldig): developer.webex.com > Getting started
 import json
 import requests
 

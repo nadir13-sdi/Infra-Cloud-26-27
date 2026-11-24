@@ -7,7 +7,6 @@ import datetime
 def collect_system_info():
     data = {}
 
-    # CPU info
     data["cpu"] = {
         "platform": platform.platform(),
         "processor": platform.processor(),
@@ -16,10 +15,8 @@ def collect_system_info():
         "cpu_percent_total": psutil.cpu_percent(interval=0.1),
     }
 
-    # Memory info
     data["memory"] = psutil.virtual_memory()._asdict()
 
-    # Network hostname
     data["network"] = {
         "hostname": socket.gethostname(),
         "fqdn": socket.getfqdn(),

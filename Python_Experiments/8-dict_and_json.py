@@ -29,7 +29,6 @@ if_dict = {
 print("Type of if_dict:", type(if_dict))
 print(if_dict)
 
-# Convert Dict to JSON string
 if_json = json.dumps(if_dict, indent=2)
 print("\nFormatted JSON String:")
 print(if_json)

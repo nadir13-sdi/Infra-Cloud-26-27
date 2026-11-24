@@ -3,7 +3,6 @@ import json
 import sys
 import datetime
 
-# --- Subnet Mask Helper Functions ---
 netmask_prefixes = {
     '255.255.255.255': '/32', '255.255.255.254': '/31', '255.255.255.252': '/30',
     '255.255.255.248': '/29', '255.255.255.240': '/28', '255.255.255.224': '/27',
@@ -19,7 +18,6 @@ def get_number_ip_hosts(p_prefix):
 
 print("Subnet test /27:", get_number_ip_hosts('/27'), "hosts")
 
-# --- Fetch My IP Address ---
 now = datetime.datetime.now()
 print("\nCurrent Time:", now)
 

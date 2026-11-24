@@ -1,20 +1,15 @@
-#collect_sysinfo.py ; output in json format
 import json
 import psutil
 import platform
 import socket
 
-
 import datetime
 now = datetime.datetime.now()
 print(now)
 
-
 def collect_system_info():
     data = {}
 
-
-    # CPU info
     data["cpu"] = {
         "platform": platform.platform(),
         "processor": platform.processor(),
@@ -25,13 +20,9 @@ def collect_system_info():
         "cpu_percent_per_cpu": psutil.cpu_percent(interval=0.1, percpu=True),
     }
 
-
-    # Memory info
     data["memory"] = psutil.virtual_memory()._asdict()
     data["swap"] = psutil.swap_memory()._asdict()
 
-
-    # Storage info (alle partities)
     storage = {}
     for part in psutil.disk_partitions(all=False):
         try:
@@ -49,8 +40,6 @@ def collect_system_info():
             continue
     data["storage"] = storage
 
-
-    # Network info
     net = {}
     addrs = psutil.net_if_addrs()
     stats = psutil.net_if_stats()
@@ -62,20 +51,14 @@ def collect_system_info():
             "io": io[iface]._asdict() if iface in io else None,
         }
 
-
     data["network"] = {
         "hostname": socket.gethostname(),
         "fqdn": socket.getfqdn(),
         "interfaces": net,
     }
 
-
     return data
-
-
-
 
 if __name__ == "__main__":
     info = collect_system_info()
-    # JSON output
     print(json.dumps(info, indent=2))

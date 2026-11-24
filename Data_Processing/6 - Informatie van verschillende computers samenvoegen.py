@@ -1,13 +1,9 @@
 import csv
 from pathlib import Path
 
-
-# 1. Configuratie van mappen en bestanden
 huidige_map = Path(".")
 uitvoer_bestand = "alle_systeeminformatie.csv"
 
-
-# 2. Vaste standaardkolommen (zoals afgesproken in taak 4)
 standaard_kolommen = [
     "computernaam",
     "computermodel",
@@ -23,22 +19,15 @@ standaard_kolommen = [
     "ipv6_link_local_adres_primaire_nic"
 ]
 
-
-# 3. Automatisch alle relevante CSV-bestanden opsporen
-# Sluit het uitvoerbestand zelf uit om duplicaten of oneindige lussen te vermijden
 csv_bestanden = [
     bestand for bestand in huidige_map.glob("*.csv")
     if bestand.name != uitvoer_bestand
 ]
 
-
 print(f"Gevonden invoerbestanden ({len(csv_bestanden)}): {[b.name for b in csv_bestanden]}")
-
 
 samengevoegde_data = []
 
-
-# 4. Elk CSV-bestand inlezen en toevoegen aan de gezamenlijke lijst
 for bestand in csv_bestanden:
     try:
         with open(bestand, mode="r", encoding="utf-8-sig") as f:
@@ -47,7 +36,6 @@ for bestand in csv_bestanden:
                 opgeschoonde_rij = {}
                 for kolom in standaard_kolommen:
                     waarde = rij.get(kolom)
-                    # Ontbrekende of lege waarden netjes opvangen
                     if waarde is None or waarde.strip() == "":
                         opgeschoonde_rij[kolom] = "N/A"
                     else:
@@ -57,13 +45,10 @@ for bestand in csv_bestanden:
     except Exception as e:
         print(f"Fout bij verwerken van {bestand.name}: {e}")
 
-
-# 5. Gezamenlijke dataset wegschrijven naar het nieuwe centrale CSV-bestand
 with open(uitvoer_bestand, mode="w", newline="", encoding="utf-8-sig") as f:
     writer = csv.DictWriter(f, fieldnames=standaard_kolommen, delimiter=",", restval="N/A")
     writer.writeheader()
     writer.writerows(samengevoegde_data)
-
 
 print(f"\nSamenvoeging voltooid! Totaal aantal rijen: {len(samengevoegde_data)}")
 print(f"Resultaat opgeslagen in: {uitvoer_bestand}")
